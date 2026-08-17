@@ -14,12 +14,14 @@ and this project adheres to [Semantic Versioning][].
 ### Removed
 -->
 
-## Unreleased
+## [0.1.1][] - 2026-08-17
 
 ### Added
 
 * Goldmark footnote rendering alongside the existing GFM extensions.
 * GitHub/GitLab-compatible Markdown alert blockquotes.
+
+[0.1.1]: https://github.com/ocidoc/ocidoc-render/compare/v0.1.0...v0.1.1
 
 ## [0.1.0][] - 2026-08-14
 
