@@ -14,7 +14,7 @@ and Content Security Policy.
 ## Install
 
 ```sh
-go get github.com/ocidoc/ocidoc-render@v0.1.0
+go get github.com/ocidoc/ocidoc-render
 ```
 
 ## Render Markdown
