@@ -94,6 +94,48 @@ func TestMarkdownNormalizesMediaAndExternalLinks(t *testing.T) {
 	}
 }
 
+func TestMarkdownRendersFootnotes(t *testing.T) {
+	t.Parallel()
+
+	fragment, err := Markdown([]byte("Text with a footnote[^1].\n\n[^1]: Footnote text.\n"), Options{
+		DocumentPath: "README.md",
+	})
+	if err != nil {
+		t.Fatalf("Markdown: %v", err)
+	}
+
+	got := string(fragment)
+	for _, want := range []string{"Footnote text.", "footnote-ref", "footnotes"} {
+		if !strings.Contains(got, want) {
+			t.Errorf("footnote output does not contain %q: %s", want, got)
+		}
+	}
+}
+
+func TestMarkdownRendersAlerts(t *testing.T) {
+	t.Parallel()
+
+	fragment, err := Markdown([]byte(
+		"> [!warning] Data deletion\n> This **cannot** be undone.\n\n> [!TIP]\n> Keep a backup.\n",
+	), Options{DocumentPath: "README.md"})
+	if err != nil {
+		t.Fatalf("Markdown: %v", err)
+	}
+
+	got := string(fragment)
+	for _, want := range []string{
+		`<blockquote class="markdown-alert markdown-alert-warning">`,
+		`<p class="markdown-alert-title">Data deletion</p>`,
+		`<strong>cannot</strong>`,
+		`<blockquote class="markdown-alert markdown-alert-tip">`,
+		`<p class="markdown-alert-title">Tip</p>`,
+	} {
+		if !strings.Contains(got, want) {
+			t.Errorf("alert output does not contain %q: %s", want, got)
+		}
+	}
+}
+
 func TestMarkdownBlocksOnlyExternalSubresources(t *testing.T) {
 	t.Parallel()
 

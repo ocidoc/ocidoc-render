@@ -10,7 +10,9 @@ import (
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
 	gmhtml "github.com/yuin/goldmark/renderer/html"
+	"github.com/yuin/goldmark/util"
 )
 
 // ExternalAssets controls whether HTTP/HTTPS subresources
@@ -42,7 +44,8 @@ type Options struct {
 // so the Markdown syntax generating them actually reaches documentHTMLPolicy's allowlist,
 // which already permits their output elements.
 var markdownRenderer = goldmark.New(
-	goldmark.WithExtensions(extension.GFM),
+	goldmark.WithExtensions(extension.GFM, extension.Footnote),
+	goldmark.WithParserOptions(parser.WithASTTransformers(util.Prioritized(alertASTTransformer{}, 0))),
 	goldmark.WithRendererOptions(gmhtml.WithUnsafe()),
 )
 

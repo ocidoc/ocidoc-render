@@ -14,6 +14,13 @@ and this project adheres to [Semantic Versioning][].
 ### Removed
 -->
 
+## Unreleased
+
+### Added
+
+* Goldmark footnote rendering alongside the existing GFM extensions.
+* GitHub/GitLab-compatible Markdown alert blockquotes.
+
 ## [0.1.0][] - 2026-08-14
 
 ### Added
